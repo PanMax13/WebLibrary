@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/results.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/base.css') }}"></link>
+</head>
+<body>
+    <div class="header">
+        <div class="header_title">
+            <div class="title"><a href="/">WebLibrary</a></div>
+        </div>
+    </div>
+
+    <div class="result_page">
+        <div class="result_title">
+            <div class="result_title_">Result for search of <br> {{search}} </div>
+        </div>
+    </div>
+
+    <div class="catalog">
+        <div class="book_catalog_block">
+            <div class="book_catalog">
+                <div class="bookItems">
+                    <div class="bookItem">
+                        <div class="bookItem_data">
+                            <img src="{{ url_for('static', path='/image.jpg') }}">
+                            <div class="bookItem_data_title">
+                                bookTitle here fhjkafhalfhjal
+                            </div>
+                            <div class="bookItem_data_author">
+                                Author here
+                            </div>
+                        </div>
+                        <div class="read_button">
+                            <button class="read">Read</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="flex: 0.1;"></div>
+        <div class="filter_block">
+            <div class="filter_Title">Filters: </div>
+            <div class="filter_params">
+                <br>
+                Ganres:
+                <div class="ganres">
+                    <input type="checkbox" id="classic">
+                    <label for="classic">Classic</label> <br>
+                    <input type="checkbox" id="comedy">
+                    <label for="comedy">Comedy</label> <br>
+                    <input type="checkbox" id="crime">
+                    <label for="crime">Crime</label><br>
+                    <input type="checkbox" id="For_children">
+                    <label for="For_children">For children</label> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

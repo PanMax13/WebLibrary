@@ -1,8 +1,3 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
 .main_page {
     width: 90%;
     margin: 15% auto;
@@ -21,6 +16,9 @@ body {
     width: 400px;
     font-size: 80px;
     margin: 0 auto;
+    font-family: "Modak", serif;
+    font-weight: 400;
+    font-style: norma
 }
 
 .search_conteiner { 

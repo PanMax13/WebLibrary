@@ -16,5 +16,5 @@ async def main(request: Request):
     )
 
 @app.post('/result')
-async def result(request: str = Form(...)):
-    return {'message': f'Your enter: {request}'}
+async def result(request: Request, search: str = Form(...)):
+    return templates.TemplateResponse(request=request, name='results.html', context={"search" : search})
