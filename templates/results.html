@@ -23,22 +23,7 @@
     <div class="catalog">
         <div class="book_catalog_block">
             <div class="book_catalog">
-                <div class="bookItems">
-                    <div class="bookItem">
-                        <div class="bookItem_data">
-                            <img src="{{ url_for('static', path='/image.jpg') }}">
-                            <div class="bookItem_data_title">
-                                bookTitle here fhjkafhalfhjal
-                            </div>
-                            <div class="bookItem_data_author">
-                                Author here
-                            </div>
-                        </div>
-                        <div class="read_button">
-                            <button class="read">Read</button>
-                        </div>
-                    </div>
-                </div>
+	            {% block bookItem %}{% endblock bookItem %}
             </div>
         </div>
         <div style="flex: 0.1;"></div>

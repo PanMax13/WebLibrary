@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, UploadFile, File
 from starlette.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
@@ -17,4 +17,18 @@ async def main(request: Request):
 
 @app.post('/result')
 async def result(request: Request, search: str = Form(...)):
-    return templates.TemplateResponse(request=request, name='results.html', context={"search" : search})
+    return templates.TemplateResponse(request=request, name='view_models/bookItems.html', context={"search" : search})
+
+@app.get('/upload')
+async def upload_form(request: Request):
+    return templates.TemplateResponse(request=request, name='/upload.html')
+
+
+
+@app.post('/upload')
+async def upload_file(request: Request, file: UploadFile = File(...)):
+    file_location = f'./books/{file.filename}'
+    with open(file_location, 'wb') as file_path:
+        file_path.write(file.file.read())
+
+
