@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WebLibrary</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/main.css') }}"></link>
+    <link rel="stylesheet" href="{{ url_for('static', path='/base.css') }}"></link>
+
+</head>
+<body>
+    <div class="main_page">
+        <div class="title_box">
+            <div class="title_conteiner">
+                WebLibrary
+            </div>
+        </div>
+        
+        <div class="search_box">
+            <div class="search_conteiner">
+                <form id="search" action="/result" method="POST">
+                    <input placeholder="Enter the name of book or author" class="input" id="request" name="search" required>
+                </form>       
+            </div>
+        </div>
+        <div class="catalog_link">
+            <a href="/catalog" class="catalog_link">Nothing to search? Go to catalog</a> 
+        </div>
+    </div>
+</body>
+</html>

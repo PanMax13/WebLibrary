@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/upload.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'view_models/header.html' %}
+    <div class="upload_file_title">
+        Upload your book here!
+    </div>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="data_block">
+            <div class="data">
+                Enter the book title: <br>
+                <div class="input_container">
+                    <input type="text" id="title" name="book_title" placeholder="Enter the book title: ">      
+                </div>
+            </div>
+            <div class="data">
+                Enter the book's author: <br>
+                <div class="input_container">
+                    <input type="text" id="author" name="book_author" placeholder="Author?">
+                </div>
+            </div>
+            <div class="data">
+                Enter the discription:<br>
+                <div class="input_container">
+                    <textarea type="text" id="discription" name="book_discription" placeholder="Your discription" rows="10" style="outline: none;
+                    height: 300px;
+                    width: 90%;
+                    margin: 20px auto;
+                    background-color: rgba(174, 174, 174, 0);
+                    border: none;
+                    text-decoration: none;
+                    font-size: 20px;
+                    outline: none;"></textarea>
+                </div>
+            </div>
+            <div class="data"> 
+                Preview image: 
+                <input type="file" id="preview_image" name="book_preview_image" accept=".jpeg, .jpg">
+            </div>
+            <div class="data">
+                upload:<br>
+                <input type="file" id="file" name="file" accept=".pdf">
+            </div>
+        <button type="submit" value="Upload">Upload!</button> 
+    </form>
+</body>
+</html>

@@ -1,2 +1,4 @@
-.gitignore
 .idea
+.env
+./books/*
+static/preview_images/*

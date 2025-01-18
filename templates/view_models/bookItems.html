@@ -1,0 +1,24 @@
+
+
+{% block bookItem %}
+<div class="bookItems">
+	{% for book in books %}
+	<div class="bookItem">
+	    <div class="bookItem_data">
+	        <img src="{{ url_for('preview_images', path='/' + book.preview_image) }}">
+	        <div class="bookItem_data_title">
+	            {{ book.title }}
+	        </div>
+	        <div class="bookItem_data_author">
+		        {{ book.author }}
+	        </div>
+	    </div>
+	    <div class="read_button">
+			<form action="/catalog/book/{{book.id}}">
+				<button class="read">Read</button>
+			</form>
+	    </div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}
