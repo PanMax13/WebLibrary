@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/results.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/base.css') }}"></link>
+    <link rel="stylesheet" href="{{ url_for('static', path='/base.css') }}">
 </head>
 <body>
-    <div class="header">
-        <div class="header_title">
-            <div class="title"><a href="/">WebLibrary</a></div>
-        </div>
-    </div>
+    {% include 'view_models/header.html' %}
 
     <div class="result_page">
         <div class="result_title">
@@ -23,27 +19,11 @@
     <div class="catalog">
         <div class="book_catalog_block">
             <div class="book_catalog">
-	            {% block bookItem %}{% endblock bookItem %}
+	            {% include "view_models/bookItems.html" %}
             </div>
         </div>
         <div style="flex: 0.1;"></div>
-        <div class="filter_block">
-            <div class="filter_Title">Filters: </div>
-            <div class="filter_params">
-                <br>
-                Ganres:
-                <div class="ganres">
-                    <input type="checkbox" id="classic">
-                    <label for="classic">Classic</label> <br>
-                    <input type="checkbox" id="comedy">
-                    <label for="comedy">Comedy</label> <br>
-                    <input type="checkbox" id="crime">
-                    <label for="crime">Crime</label><br>
-                    <input type="checkbox" id="For_children">
-                    <label for="For_children">For children</label> <br>
-                </div>
-            </div>
-        </div>
+        {% include "view_models/filters.html" %}
     </div>
 </body>
 </html>

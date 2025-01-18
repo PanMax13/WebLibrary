@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/read_book.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'view_models/header.html' %}
+    <div class="read_book">
+        <div class="data_block">
+            <div class="author_image_data">
+                <div class="read_book_image data_block_">
+                    <img src="{{ url_for('preview_images', path='/' + preview_image) }}">
+                </div>
+                <div class="read_author_data data_block_">
+                    <div class="read_book_title">{{ title }}</div>
+                    <div class="read_book_author">{{ author }}</div>
+                </div>
+            </div> 
+            <div class="book_discription">
+                <h5><b>Discription:</b></h5>
+                <div>{{ discription }}</div>
+            </div>
+        </div>
+        <form action="/catalog/book/read/1/1" method="get" enctype="multipart/form-data">
+            <button type="submit" class="read_button book_form">
+                Read
+            </button>
+        </form>
+        <form>
+            <div class="download_button book_form">
+                Download
+            </div>
+        </form>
+    </div>
+</body>
+</html>

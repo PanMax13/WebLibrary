@@ -18,7 +18,7 @@
     margin: 0 auto;
     font-family: "Modak", serif;
     font-weight: 400;
-    font-style: norma
+    font-style: normal;
 }
 
 .search_conteiner { 
@@ -42,4 +42,15 @@
     text-decoration: none;
     font-size: 30px;
     outline: none;
+}
+
+
+.catalog_link {
+    margin: 20px;
+    font-size: 17px;
+    color: black;
+    width: 300px;
+    margin: 10px auto;
+    text-align: center;
+    text-decoration: underline;
 }

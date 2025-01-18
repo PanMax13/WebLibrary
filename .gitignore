@@ -1,3 +1,4 @@
 .idea
 .env
-./statis/image.jpg
+./books/*
+static/preview_images/*
