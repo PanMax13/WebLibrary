@@ -2,3 +2,4 @@
 .env
 ./books/*
 static/preview_images/*
+.DS_Store

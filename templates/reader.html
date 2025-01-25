@@ -13,20 +13,30 @@
     <div class="reader">
         <div class="book_title">{{ title }}</div>
         <div class="font_size_editer">
-            Edit the text's font-size:<button>+</button><button>-</button>
+            Edit the text's font-size:<button id="bigger">+</button><button id="smaller">-</button>
         </div>
-        <div class="page_counter">page: <span id="page_counter">1</span></div>
+        <div class="page_counter">page: <span id="page">{{page}}</span></div>
+        <div class="pagination">
+            {% for page_ in pages %}
+                <a href="{{ url_for('generate_page', id=id, page=page_) }}" class="pagination_link">{{ page_ }}</a>
+            {% endfor %}
+        </div>
         <div class="reader_block">
-            <div class="page_swapper left book">
-                <<
-            </div>
-            <div class="book_page book">
+            <form action="{{ url_for('generate_page', id=id, page=(page - 1)) }}" method="get" enctype="multipart/form-data">
+                <div class="page_swapper left book {% if visible_left %} visible {% endif %}" id="back">
+                    <button type="submit"><<</button>
+                </div>
+            </form>
+            <div class="book_page book" id="text">
                 {{ text }}
             </div>
-            <div class="page_swapper right book">
-                >>
-            </div>
+            <form action="{{ url_for('generate_page', id=id, page=(page + 1)) }}" method="get" enctype="multipart/form-data">
+                <div class="page_swapper right book {% if visible_right %} visible {% endif %}">
+                    <button type="submit">>></button>
+                </div>
+            </form>
         </div>
     </div>
+    <script src="{{  url_for('static', path='/resize_font.js') }}"></script>
 </body>
 </html>

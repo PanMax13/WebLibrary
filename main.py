@@ -7,7 +7,7 @@ from starlette.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from fileReader import page_reader
+from BookReader import BookReader
 
 # import models
 from db.models import Book
@@ -112,7 +112,8 @@ async def read_the_book(request: Request, book_id: int, session: AsyncSession = 
         'title': book_title,
         'preview_image': book_preview,
         'author': book_author,
-        'discription': book_discription
+        'discription': book_discription,
+        'id': book_id
     }
 
     return templates.TemplateResponse(request=request, name='/read_book.html', context=context)
@@ -121,10 +122,21 @@ async def read_the_book(request: Request, book_id: int, session: AsyncSession = 
 async def generate_page(reqeust: Request, id: int, page: int, session: AsyncSession = Depends(createSession)):
     book = await session.get(Book, id)
 
-    page_text = page_reader(book.path, page)
+    book_ = BookReader(book.path)
+
+    page_text = book_.page_reader(page)
+    pages = book_.pagination(page)
+    visible_left = page == 0
+    visible_right = book_.get_last_page() == page
 
     context = {
         'title': book.title,
-        'text': page_text
+        'text': page_text,
+        'pages': pages,
+        'page': page,
+        'id': id,
+        'visible_left': visible_left,
+        'visible_right': visible_right
+
     }
     return templates.TemplateResponse(request= reqeust, name='/reader.html', context=context)
