@@ -3,15 +3,18 @@
             <div class="filter_params">
                 <br>
                 Ganres:
-                <div class="ganres">
-                    <input type="checkbox" id="classic">
-                    <label for="classic">Classic</label> <br>
-                    <input type="checkbox" id="comedy">
-                    <label for="comedy">Comedy</label> <br>
-                    <input type="checkbox" id="crime">
-                    <label for="crime">Crime</label><br>
-                    <input type="checkbox" id="For_children">
-                    <label for="For_children">For children</label> <br>
-                </div>
+	            <form action="/catalog/filtered" method="post" enctype="multipart/form-data">
+		            <div class="ganres">
+	                    <input type="checkbox" name='filters' value="classic" {% if 'classic' in filters %} checked {% endif %}>
+	                    <label for="classic">Classic</label> <br>
+	                    <input type="checkbox" name='filters' value="comedy" {% if 'comedy' in filters %} checked {% endif %}>
+	                    <label for="comedy">Comedy</label> <br>
+	                    <input type="checkbox" name='filters' value="crime" {% if 'crime' in filters %} checked {% endif %}>
+	                    <label for="crime">Crime</label><br>
+	                    <input type="checkbox" name='filters' value="children" {% if 'children' in filters %} checked {% endif %}>
+	                    <label for="For_children">For children</label> <br>
+	                </div>
+		            <button type="submit">Done!</button>
+	            </form>
             </div>
         </div>

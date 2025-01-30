@@ -18,7 +18,7 @@
         <div class="page_counter">page: <span id="page">{{page}}</span></div>
         <div class="pagination">
             {% for page_ in pages %}
-                <a href="{{ url_for('generate_page', id=id, page=page_) }}" class="pagination_link">{{ page_ }}</a>
+                <a href="{{ url_for('generate_page', id=id, page=page_) }}" class="pagination_link">{{ page_}}</a>
             {% endfor %}
         </div>
         <div class="reader_block">

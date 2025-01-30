@@ -1,19 +1,26 @@
 from http.client import responses
+from logging import exception
 
-from fastapi import FastAPI, Request, Form, UploadFile, File, Depends
+from fastapi import FastAPI, Request, Form, UploadFile, File, Depends, Query
 from starlette.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from typing import List
 
-from BookReader import BookReader
+
+from generate_slug import *
+
 
 # import models
 from db.models import Book
+from BookReader import BookReader
 from db.db_conn import connection, createSession
 
+
 app = FastAPI()
+
 # static file for css
 app.mount('/static', StaticFiles(directory='static'), name='static')
 #static files for images
@@ -54,6 +61,7 @@ async def upload_file(
         book_author: str = Form(...),
         book_discription: str = Form(...),
         book_preview_image: UploadFile = File(...),
+        ganre: list[str] = Form(...),
         session: AsyncSession = Depends(createSession)
     ):
 
@@ -62,6 +70,7 @@ async def upload_file(
     bookTitle = book_title
     bookAuthor = book_author
     bookDiscription = book_discription
+    slug = generate_slug(bookTitle)
 
 
     try:
@@ -71,7 +80,9 @@ async def upload_file(
             discription = bookDiscription,
             path=file_location,
             author=bookAuthor,
-            preview_image=preview_image_location
+            preview_image=preview_image_location,
+            slug=slug,
+            ganres=ganre
         )
 
         session.add(upload_book)
@@ -83,6 +94,8 @@ async def upload_file(
         with open('./preview_images/' + preview_image_location, 'wb') as preview_path:
             preview_path.write(book_preview_image.file.read())
 
+        print(ganre)
+
 
         return RedirectResponse('/', status_code=303)
 
@@ -92,7 +105,10 @@ async def upload_file(
 
 # render the catalog of books
 @app.get('/catalog')
-async def catalog(request: Request, session: AsyncSession = Depends(createSession)):
+async def catalog(
+        request: Request,
+        session: AsyncSession = Depends(createSession)
+):
     catalog = select(Book)
     catalog = await session.execute(catalog)
     books = catalog.scalars().all()
@@ -100,6 +116,23 @@ async def catalog(request: Request, session: AsyncSession = Depends(createSessio
     return templates.TemplateResponse(request=request, name='/catalog.html', context={'books': books})
 
 
+# filter of books
+@app.post('/catalog/filtered')
+async def filter(
+        request: Request,
+        filters: List[str] = Form(...),
+        session: AsyncSession = Depends(createSession)
+):
+    print(filters)
+    books = select(Book).where(Book.ganres.op('@>')(filters))
+    books_ = await session.execute(books)
+    books = books_.scalars().all()
+    if filters is None:
+        return RedirectResponse('/catalog')
+    return templates.TemplateResponse(request=request, name='/catalog.html', context={'books': books, 'filters': filters})
+
+
+# from for book data
 @app.get('/catalog/book/{book_id}')
 async def read_the_book(request: Request, book_id: int, session: AsyncSession = Depends(createSession)):
     book = await session.get(Book, book_id)
@@ -118,7 +151,7 @@ async def read_the_book(request: Request, book_id: int, session: AsyncSession = 
 
     return templates.TemplateResponse(request=request, name='/read_book.html', context=context)
 
-@app.get('/catalog/book/read/{id}/{page}')
+@app.get('/catalog/book/read/{slug}/{page}')
 async def generate_page(reqeust: Request, id: int, page: int, session: AsyncSession = Depends(createSession)):
     book = await session.get(Book, id)
 
@@ -140,3 +173,13 @@ async def generate_page(reqeust: Request, id: int, page: int, session: AsyncSess
 
     }
     return templates.TemplateResponse(request= reqeust, name='/reader.html', context=context)
+
+@app.post('/test')
+async def test(request: Request, ganre: List[str] = Form(...)):
+    return templates.TemplateResponse(request, '/test.html', context={"choosen": ganre})
+
+
+@app.get('/test_')
+async def test(request: Request):
+    return templates.TemplateResponse(request, '/test.html', context={'choosen': []})
+

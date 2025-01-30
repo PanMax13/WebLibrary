@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	 <form action="/test" method="post">
+		            <div class="ganres">
+	                    <input type="checkbox" id="classic" name="ganre" value="classic"/>
+	                    <label for="classic">Classic</label> <br>
+	                    <input type="checkbox" name="ganre" id="comedy" value="comedy"/>
+	                    <label for="comedy">Comedy</label> <br>
+	                    <input type="checkbox" name="ganre" id="crime" value="crime">
+	                    <label for="crime">Crime</label><br>
+	                    <input type="checkbox" name="ganre" id="For_children" value="children"/>
+	                    <label for="For_children">For children</label> <br>
+	                </div>
+		            <button type="submit">Done!</button>
+	            </form>
+
+	<h1>{{choosen}}</h1>
+</body>
+</html>

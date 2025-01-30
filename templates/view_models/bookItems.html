@@ -2,6 +2,7 @@
 
 {% block bookItem %}
 <div class="bookItems">
+	{% if books %}
 	{% for book in books %}
 	<div class="bookItem">
 	    <div class="bookItem_data">
@@ -20,5 +21,7 @@
 	    </div>
 	</div>
 	{% endfor %}
+	{% else %} <h2>No books yet</h2>
+	{% endif %}
 </div>
 {% endblock %}
