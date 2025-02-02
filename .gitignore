@@ -1,5 +1,4 @@
 .idea
-*.env
+.env
 .DS_Store
-migrations
 alembic.ini
