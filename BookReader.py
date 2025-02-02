@@ -1,7 +1,7 @@
 import pypdf
 
 
-class BookReader():
+class BookReader:
 
     # init book
     def __init__(self, pdf_path):
@@ -14,21 +14,23 @@ class BookReader():
         return text
 
     # pagination
-    def pagination(self, page=0) -> []: # return pagination pages
-        pages = 5 # value of pages in pagination block
-
+    def pagination(self, page=1) -> []: # return pagination pages
         middle = page
 
-        if middle < pages:
-            return [x for x in range(1, middle)] + [x for x in range(middle, middle + pages)]
-        return [x for x in range(middle - pages, middle)] + [x for x in range(middle, middle + pages + 1)]
+        value_of_pages = 5 # value of pages in pagination list
+        pagination = []
+
+        if middle - value_of_pages < 0:
+            pagination = [page for page in range(0, middle)] + [page for page in range(middle, value_of_pages)]
+            return pagination
+
+        if middle + value_of_pages > len(self.pdf.pages):
+            pagination = [page for page in range(middle - value_of_pages, len(self.pdf.pages))]
+            return pagination
+
+        return [page for page in range(middle - value_of_pages, middle)] + [page for page in range(middle, middle + value_of_pages)]
+
 
 
     def get_last_page(self):
         return self.pdf.get_num_pages() - 1
-
-
-
-book = BookReader('books/Anna_Karenina.pdf')
-
-print(book.get_last_page())

@@ -120,15 +120,20 @@ async def catalog(
 @app.post('/catalog/filtered')
 async def filter(
         request: Request,
-        filters: List[str] = Form(...),
+        filters: List[str] | None = Form(default=None),
         session: AsyncSession = Depends(createSession)
 ):
-    print(filters)
     books = select(Book).where(Book.ganres.op('@>')(filters))
     books_ = await session.execute(books)
     books = books_.scalars().all()
+
+    print(filters)
     if filters is None:
-        return RedirectResponse('/catalog')
+        books = select(Book)
+        books = await session.execute(books)
+        books = books.scalars().all()
+        return templates.TemplateResponse(request=request, name='/catalog.html', context={'books': books})
+
     return templates.TemplateResponse(request=request, name='/catalog.html', context={'books': books, 'filters': filters})
 
 
@@ -140,18 +145,20 @@ async def read_the_book(request: Request, book_id: int, session: AsyncSession = 
     book_title = book.title
     book_author = book.author
     book_discription = book.discription
+    ganres = book.ganres
 
     context = {
         'title': book_title,
         'preview_image': book_preview,
         'author': book_author,
         'discription': book_discription,
-        'id': book_id
+        'id': book_id,
+        'ganres': ganres
     }
 
     return templates.TemplateResponse(request=request, name='/read_book.html', context=context)
 
-@app.get('/catalog/book/read/{slug}/{page}')
+@app.get('/catalog/book/read/{id}/{page}')
 async def generate_page(reqeust: Request, id: int, page: int, session: AsyncSession = Depends(createSession)):
     book = await session.get(Book, id)
 
@@ -172,10 +179,13 @@ async def generate_page(reqeust: Request, id: int, page: int, session: AsyncSess
         'visible_right': visible_right
 
     }
+
     return templates.TemplateResponse(request= reqeust, name='/reader.html', context=context)
 
 @app.post('/test')
-async def test(request: Request, ganre: List[str] = Form(...)):
+async def test(request: Request, ganre: List[str] | None = Form(default=None)):
+    if ganre is None:
+        return templates.TemplateResponse(request, '/test.html', context={"choosen": "it's empty"})
     return templates.TemplateResponse(request, '/test.html', context={"choosen": ganre})
 
 

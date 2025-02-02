@@ -18,8 +18,15 @@
                 <div class="read_author_data data_block_">
                     <div class="read_book_title">{{ title }}</div>
                     <div class="read_book_author">{{ author }}</div>
+	                <div class="ganres">
+                        {% for ganre in ganres %}
+			            <div class="ganre">
+				            {{ ganre }}
+			            </div>
+                        {% endfor %}
+		            </div>
                 </div>
-            </div> 
+            </div>
             <div class="book_discription">
                 <h5><b>Discription:</b></h5>
                 <div>{{ discription }}</div>

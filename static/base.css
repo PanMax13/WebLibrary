@@ -16,11 +16,23 @@ body {
 }
 
 .header_title { 
+    text-align: left;
     font-size: 30px;
     width: 300px;
     text-align: center;
+    flex: 1;
+    padding-left: 10px;
 }
 
+.upload {
+    padding: 10px;
+    flex: 9;
+}
+
+.upload_button {
+    text-align: right;
+    margin: 20px auto;
+}
 
 .title {
     width: 100%;

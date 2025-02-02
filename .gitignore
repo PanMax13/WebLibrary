@@ -1,7 +1,5 @@
-./idea
-./env
-./books/*
-static/preview_images/*
+.idea
+*.env
 .DS_Store
-./migrations/*
-./alembic.ini
+migrations
+alembic.ini
